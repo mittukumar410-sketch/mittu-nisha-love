@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ek Chhota Sa Khat 💌</title>
+<style>
+:root{--pink:#ff5f93;--deep:#8f174f;--cream:#fff7fb}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif;background:radial-gradient(circle at top,#ffe1ee,#fff8fb 55%,#ffeaf2);color:#63223f;overflow-x:hidden}
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart{position:absolute;bottom:-50px;animation:floatUp linear forwards;opacity:.7}
+@keyframes floatUp{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+main{position:relative;z-index:1;max-width:680px;margin:auto;padding:22px 16px 40px}
+.panel{background:#ffffffdf;border:1px solid #ffd0e1;border-radius:24px;padding:22px;box-shadow:0 12px 35px #9b23521a;margin:14px 0}
+h1{text-align:center;font-size:clamp(27px,7vw,40px);margin:8px 0;color:var(--deep)}
+.subtitle{text-align:center;margin:0 0 20px;color:#9b5272}
+label{display:block;font-weight:700;margin:12px 0 6px}
+input[type=text],input[type=url]{width:100%;padding:12px 14px;border:1px solid #efb6cd;border-radius:12px;font-size:16px;background:#fff}
+button,.button{border:0;border-radius:999px;padding:12px 18px;font-size:16px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#ff6b9c,#c52e70);color:white;box-shadow:0 5px 15px #c52e7030}
+button.secondary{background:#fff;color:#9d285a;border:1px solid #f2b4cd;box-shadow:none}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.envelope-area{display:flex;justify-content:center;padding:18px 0 4px;perspective:900px}
+.envelope{position:relative;width:min(300px,82vw);height:190px;border-radius:8px;background:#f6aac7;cursor:pointer;box-shadow:0 12px 22px #7e17401e;transition:transform .25s}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(140deg,transparent 49%,#ed7ca7 50%),linear-gradient(220deg,transparent 49%,#f08ab0 50%);clip-path:polygon(0 100%,50% 42%,100% 100%);z-index:3}
+.flap{position:absolute;inset:0;background:#ffcee0;clip-path:polygon(0 0,100% 0,50% 60%);transform-origin:top;transition:transform .8s;z-index:4}
+.envelope.open .flap{transform:rotateX(180deg);z-index:0}
+.seal{position:absolute;z-index:5;left:50%;top:51%;transform:translate(-50%,-50%);font-size:34px;transition:opacity .2s}
+.envelope.open .seal{opacity:0}
+.letter{display:none;background:#fffdf9;border:1px solid #f6c4d6;border-radius:18px;padding:22px 18px;margin-top:20px;animation:pop .6s ease both;box-shadow:0 10px 25px #7e174012}
+.letter.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.letter h2{text-align:center;color:#a71d5d}
+.message{text-align:center;line-height:1.9;font-size:17px;white-space:pre-line}
+.signature{text-align:right;font-weight:800;margin-top:20px;color:#a71d5d}
+.music-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+small,.hint{color:#8c6476;font-size:13px;line-height:1.5}
+#qr{display:block;max-width:220px;width:100%;margin:16px auto;border:10px solid white;border-radius:12px}
+.print-card{background:#fff7fb;border:2px dashed #e78ab0;border-radius:18px;padding:20px;text-align:center}
+@media print{.no-print,.hearts{display:none!important}body{background:white}.panel{box-shadow:none}.print-card{border:1px solid #c66b91}}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main>
+  <h1>💌 Ek Chhota Sa Khat</h1>
+  <p class="subtitle">Ek pyaara sa message, sirf dil ki baat kehne ke liye ❤️</p>
+
+  <section class="panel no-print">
+    <h2>✍️ Apna card personalize karein</h2>
+    <label for="sender">Aapka naam</label><input id="sender" type="text" value="मिट्ठू कुमार" placeholder="आपका नाम">
+    <label for="recipient">Unka naam</label><input id="recipient" type="text" value="निशा कुमारी" placeholder="उनका नाम">
+    <div class="actions"><button id="update">Naam update karein ❤️</button></div>
+    <p class="hint">Naam isi page par update honge. QR code ko doosre phone par chalane ke liye is page ko pehle online host karna hoga.</p>
+  </section>
+
+  <section class="panel">
+    <h2 style="text-align:center">💗 Aapke liye ek letter</h2>
+    <p class="subtitle">Lifafa kholne ke liye uspe tap karein</p>
+    <div class="envelope-area">
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Lifafa kholein">
+        <div class="flap"></div><div class="seal">💖</div>
+      </div>
+    </div>
+    <article class="letter" id="letter">
+      <h2 id="letterTitle">निशा कुमारी, एक बात कहनी थी… 💗</h2>
+      <div class="message" id="message">Tumhari muskaan mere din ko aur achha bana deti hai. Main tumhe aur achhe se jaan-na chahta hoon.
+
+Kya tum mujhe jaanne ka ek mauka dena chahogi? 😊
+
+Koi pressure nahi—tumhara jo bhi jawab ho, main uski izzat karunga. ❤️</div>
+      <div class="signature" id="signature">— मिट्ठू कुमार की तरफ से ❤️</div>
+    </article>
+    <div class="actions"><button class="secondary" id="closeLetter">Lifafa band karein</button></div>
+  </section>
+
+  <section class="panel no-print">
+    <h2>🎵 Background music (optional)</h2>
+    <p class="hint">Apne phone/computer se koi audio file choose karein. Music tabhi chalega jab aap Play dabayenge; browser bina permission ke music auto-play nahi karta.</p>
+    <input type="file" id="audioFile" accept="audio/*">
+    <div class="actions">
+      <button id="playMusic">▶ Music Play</button><button class="secondary" id="stopMusic">■ Stop</button>
+    </div>
+    <audio id="audio" loop></audio>
+  </section>
+
+  <section class="panel no-print">
+    <h2>🔲 QR Code banayein</h2>
+    <p class="hint">Pehle is page ko public website par host karein (jaise GitHub Pages), phir uska public HTTPS link yahan paste karein. Local file ka QR kisi aur ke phone par kaam nahi karega.</p>
+    <label for="pageUrl">Aapki hosted website ka link</label>
+    <input id="pageUrl" type="url" placeholder="https://example.github.io/love-letter/">
+    <div class="actions"><button id="makeQr">QR Code banayein</button><button class="secondary" id="printCard">Card print karein</button></div>
+    <div id="qrWrap" hidden>
+      <img id="qr" alt="QR code">
+      <p class="hint" style="text-align:center">QR ko download/print karne ke liye image par long-press karein. Scan karne par upar diya hua link khulega.</p>
+    </div>
+  </section>
+
+  <section class="panel print-card">
+    <div style="font-size:38px">💌 🌹 💗</div>
+    <h2>Ek chhota sa surprise</h2>
+    <p>Camera se QR scan karein<br>aur ek pyaara sa khat padhein ❤️</p>
+    <p class="hint">Aap chahein to is card ka print le sakte hain. QR Code banane ke baad print karein.</p>
+  </section>
+  <p class="hint" style="text-align:center">Pyaar se baat kahiye, aur saamne wale ke jawab aur comfort ki izzat kijiye. ❤️</p>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+function updateNames(){
+  const sender = $('sender').value.trim() || 'मिट्ठू कुमार';
+  const recipient = $('recipient').value.trim() || 'निशा कुमारी';
+  $('letterTitle').textContent = `${recipient}, ek baat kehni thi… 💗`;
+  $('signature').textContent = `— ${sender} ki taraf se ❤️`;
+  $('message').textContent = `Hi ${recipient},\\n\\nTumhari muskaan mere din ko aur achha bana deti hai. Main tumhe aur achhe se jaan-na chahta hoon.\\n\\nKya tum mujhe jaanne ka ek mauka dena chahogi? 😊\\n\\nKoi pressure nahi—tumhara jo bhi jawab ho, main uski izzat karunga. ❤️`;
+}
+function toggleLetter(open){
+  $('envelope').classList.toggle('open',open);
+  $('letter').classList.toggle('show',open);
+}
+$('update').addEventListener('click',updateNames);
+$('envelope').addEventListener('click',()=>toggleLetter(!$('letter').classList.contains('show')));
+$('envelope').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleLetter(!$('letter').classList.contains('show'));}});
+$('closeLetter').addEventListener('click',()=>toggleLetter(false));
+$('audioFile').addEventListener('change',e=>{
+  const file=e.target.files[0]; if(!file)return;
+  $('audio').src=URL.createObjectURL(file); $('audio').load();
+});
+$('playMusic').addEventListener('click',()=>{if(!$('audio').src){alert('Pehle audio file choose karein.');return;} $('audio').play().catch(()=>alert('Music play karne ke liye dobara Play dabayein.'));});
+$('stopMusic').addEventListener('click',()=>{$('audio').pause();$('audio').currentTime=0;});
+$('makeQr').addEventListener('click',()=>{
+  const url=$('pageUrl').value.trim();
+  if(!url || !/^https:\/\/.+/i.test(url)){alert('Pehle apni hosted website ka valid https:// link daalein.');return;}
+  $('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data='+encodeURIComponent(url);
+  $('qrWrap').hidden=false;
+});
+$('printCard').addEventListener('click',()=>window.print());
+function addHeart(){
+  const el=document.createElement('span');el.className='heart';
+  el.textContent=['💗','💕','💖','♥'][Math.floor(Math.random()*4)];
+  el.style.left=Math.random()*100+'%';
+  el.style.fontSize=(16+Math.random()*22)+'px';
+  const duration=5+Math.random()*7;el.style.animationDuration=duration+'s';
+  $('hearts').appendChild(el);setTimeout(()=>el.remove(),duration*1000);
+}
+setInterval(addHeart,550);
+for(let i=0;i<8;i++)setTimeout(addHeart,i*250);
+</script>
+</body>
+</html>
