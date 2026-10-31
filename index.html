@@ -116,6 +116,15 @@ function updateNames(){
 function toggleLetter(open){
   $('envelope').classList.toggle('open',open);
   $('letter').classList.toggle('show',open);
+
+  if(open){
+    const audio = $('audio');
+    if(!audio.src){
+      audio.src = "https://github.com/mittukumar410-sketch/mittu-nisha-love/raw/refs/heads/main/%E0%A4%B5%E0%A4%B9_%E0%A4%B2%E0%A4%A1%E0%A4%BC%E0%A4%95%E0%A5%80_%E0%A4%AC%E0%A4%B9%E0%A5%81%E0%A4%A4_%E0%A4%AF%E0%A4%BE%E0%A4%A6_%E0%A4%86%E0%A4%A4%E0%A5%80%28128k%29.mp3";
+    }
+    audio.play().catch(()=>alert("गाना चलाने के लिए Music Play बटन दबाएँ।"));
+  }
+}
 }
 $('update').addEventListener('click',updateNames);
 $('envelope').addEventListener('click',()=>toggleLetter(!$('letter').classList.contains('show')));
