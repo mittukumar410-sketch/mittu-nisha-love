@@ -125,7 +125,6 @@ function toggleLetter(open){
     audio.play().catch(()=>alert("गाना चलाने के लिए Music Play बटन दबाएँ।"));
   }
 }
-}
 $('update').addEventListener('click',updateNames);
 $('envelope').addEventListener('click',()=>toggleLetter(!$('letter').classList.contains('show')));
 $('envelope').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleLetter(!$('letter').classList.contains('show'));}});
